@@ -245,8 +245,8 @@
                         return NodeFilter.FILTER_REJECT;
                     }
                     
-                    // Check if contains clawhub install command
-                    if (node.textContent && /clawhub\s+install\s+[a-zA-Z0-9_-]+/i.test(node.textContent)) {
+                    // Check if contains clawhub install command (with optional version like clawhub@1.0.0)
+                    if (node.textContent && /clawhub(?:@[\w^~.+-]*)?\s+install\s+[a-zA-Z0-9_-]+/i.test(node.textContent)) {
                         return NodeFilter.FILTER_ACCEPT;
                     }
                     
@@ -267,7 +267,7 @@
             if (!parent) return;
 
             var text = textNode.textContent;
-            var pattern = /clawhub\s+install\s+([a-zA-Z0-9_-]+)/gi;
+            var pattern = /clawhub(?:@[\w^~.+-]*)?\s+install\s+([a-zA-Z0-9_-]+)/gi;
             var match;
             var lastIndex = 0;
             var fragment = document.createDocumentFragment();
@@ -317,14 +317,14 @@
                 if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
                     for (var j = 0; j < mutation.addedNodes.length; j++) {
                         var node = mutation.addedNodes[j];
-                        // Check if new node contains clawhub install
+                        // Check if new node contains clawhub install (with optional version)
                         if (node.nodeType === Node.TEXT_NODE) {
-                            if (/clawhub\s+install\s+[a-zA-Z0-9_-]+/i.test(node.textContent)) {
+                            if (/clawhub(?:@[\w^~.+-]*)?\s+install\s+[a-zA-Z0-9_-]+/i.test(node.textContent)) {
                                 hasNewContent = true;
                                 break;
                             }
                         } else if (node.nodeType === Node.ELEMENT_NODE) {
-                            if (/clawhub\s+install\s+[a-zA-Z0-9_-]+/i.test(node.textContent || '')) {
+                            if (/clawhub(?:@[\w^~.+-]*)?\s+install\s+[a-zA-Z0-9_-]+/i.test(node.textContent || '')) {
                                 hasNewContent = true;
                                 break;
                             }

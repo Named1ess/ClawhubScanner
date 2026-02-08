@@ -4,7 +4,7 @@ A Chrome extension that detects and scans ClawHub command skill security informa
 
 ## Features
 
-- 🔍 **Auto Detection**: Automatically scans `clawhub install <skill>` commands on web pages
+- 🔍 **Auto Detection**: Automatically scans `clawhub install <skill>` or `clawhub@<version> install <skill>` commands on web pages
 - ⚡ **Hover Display**: Hover over commands to view security scan results
 - 📊 **Detailed Analysis**: Shows skill security rating, malicious explanations, remote scripts, and more
 - 🎨 **Beautiful UI**: Modern dark theme design
@@ -21,7 +21,7 @@ A Chrome extension that detects and scans ClawHub command skill security informa
 ## Usage
 
 ### Method One: Auto Detection
-1. Browse web pages containing `clawhub install <skill>` commands
+1. Browse web pages containing `clawhub install <skill>` or `clawhub@<version> install <skill>` commands
 2. Hover over highlighted commands
 3. A popup will show the skill's security scan results
 
