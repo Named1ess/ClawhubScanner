@@ -170,7 +170,12 @@
             html += '<div style="margin-top: 10px;"><strong style="color: #ffd93d;">&#128230; Remote Script URLs:</strong>';
             html += '<ul style="margin: 8px 0 0 0; padding-left: 20px;">';
             for (var i = 0; i < data.remote_script_urls.length; i++) {
-                html += '<li style="word-break: break-all; margin-bottom: 4px;"><a href="' + escapeHtml(data.remote_script_urls[i]) + '" target="_blank" style="color: #6bcfff;">' + escapeHtml(data.remote_script_urls[i]) + '</a></li>';
+                var url = data.remote_script_urls[i];
+                if (isSafeUrl(url)) {
+                    html += '<li style="word-break: break-all; margin-bottom: 4px;"><a href="' + escapeHtml(url) + '" target="_blank" rel="noopener noreferrer" style="color: #6bcfff;">' + escapeHtml(url) + '</a></li>';
+                } else {
+                    html += '<li style="word-break: break-all; margin-bottom: 4px; color: #ff6b6b;" title="Unsafe URL format">' + escapeHtml(url) + ' &#9888;</li>';
+                }
             }
             html += '</ul></div>';
         }
@@ -196,6 +201,13 @@
         var div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    // URL safety validation - prevent javascript: and data: protocol attacks
+    function isSafeUrl(url) {
+        if (!url || typeof url !== 'string') return false;
+        // Only allow http/https protocols, and protocol-relative URLs
+        return /^https?:\/\//i.test(url) || /^\/\//.test(url);
     }
 
     // Add underline marker to element (no highlight)

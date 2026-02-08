@@ -89,9 +89,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="detail-title warning">📜 Remote Instruction URLs</div>
                     <div class="detail-content">
                         <ul>
-                            ${data.remote_instruction_urls.map(url => `
-                                <li><a href="${escapeHtml(url)}" target="_blank">${escapeHtml(url)}</a></li>
-                            `).join('')}
+                            ${data.remote_instruction_urls.map(url => {
+                                const safeUrl = isSafeUrl(url);
+                                return safeUrl
+                                    ? `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a></li>`
+                                    : `<li style="color: #ff6b6b;" title="Unsafe URL format">${escapeHtml(url)} &#9888;</li>`;
+                            }).join('')}
                         </ul>
                     </div>
                 </div>
@@ -105,9 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="detail-title warning">📦 Remote Script URLs</div>
                     <div class="detail-content">
                         <ul>
-                            ${data.remote_script_urls.map(url => `
-                                <li><a href="${escapeHtml(url)}" target="_blank">${escapeHtml(url)}</a></li>
-                            `).join('')}
+                            ${data.remote_script_urls.map(url => {
+                                const safeUrl = isSafeUrl(url);
+                                return safeUrl
+                                    ? `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a></li>`
+                                    : `<li style="color: #ff6b6b;" title="Unsafe URL format">${escapeHtml(url)} &#9888;</li>`;
+                            }).join('')}
                         </ul>
                     </div>
                 </div>
@@ -148,5 +154,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    // URL safety validation - prevent javascript: and data: protocol attacks
+    function isSafeUrl(url) {
+        if (!url || typeof url !== 'string') return false;
+        // Only allow http/https protocols, and protocol-relative URLs
+        return /^https?:\/\//i.test(url) || /^\/\//.test(url);
     }
 });
