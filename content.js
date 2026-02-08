@@ -236,7 +236,7 @@
                     if (!parent) return NodeFilter.FILTER_REJECT;
                     
                     var tagName = parent.tagName.toUpperCase();
-                    if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME', 'OBJECT', 'PRE'].includes(tagName)) {
+                    if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'IFRAME', 'OBJECT'].includes(tagName)) {
                         return NodeFilter.FILTER_REJECT;
                     }
                     
