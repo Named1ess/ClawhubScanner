@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClawhubScanner</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🛡️</span>
+                <h1>ClawhubScanner</h1>
+            </div>
+            <p class="subtitle">ClawHub Security Skills Scanner</p>
+        </header>
+
+        <main class="main-content">
+            <div class="scan-section">
+                <h2>🔍 Scan Skills</h2>
+                <div class="input-group">
+                    <input type="text" id="skillName" placeholder="Input skill name..." autocomplete="off">
+                    <button id="scanBtn">Scan</button>
+                </div>
+            </div>
+
+            <div id="result" class="result-section" style="display: none;">
+                <!-- The results will be displayed here -->
+            </div>
+
+            <div id="loading" class="loading-section" style="display: none;">
+                <div class="spinner"></div>
+                <p>Querying security information...</p>
+            </div>
+
+            <div id="error" class="error-section" style="display: none;">
+                <span class="error-icon">❌</span>
+                <p id="errorMessage"></p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>🔗 Data Source: <a href="https://clawdex.koi.security" target="_blank">ClawDex API</a></p>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
