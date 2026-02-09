@@ -61,8 +61,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const verdict = data.verdict === 'malicious' ? 'Dangerous ⚠️' : 'Safe ✅';
-        const verdictClass = data.verdict === 'malicious' ? 'verdict-malicious' : 'verdict-safe';
+        // Handle verdict display correctly (benign, malicious, unknown)
+        const verdictTexts = {
+            'malicious': { text: 'Dangerous ⚠️', class: 'verdict-malicious' },
+            'benign': { text: 'Safe ✅', class: 'verdict-safe' },
+            'unknown': { text: 'Unknown ⚠️', class: 'verdict-unknown' }
+        };
+        const verdictInfo = verdictTexts[data.verdict] || verdictTexts['unknown'];
+        const verdict = verdictInfo.text;
+        const verdictClass = verdictInfo.class;
 
         let html = `
             <div class="result-header">

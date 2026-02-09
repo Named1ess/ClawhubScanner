@@ -142,16 +142,28 @@
     function updateTooltipContent(tipElement, data, skillName) {
         var verdict = data.verdict || 'unknown';
         var isMalicious = verdict === 'malicious';
-        var verdictText = isMalicious ? 'Dangerous' : (verdict === 'benign' ? 'Safe' : 'Unknown');
-        var verdictEmoji = isMalicious ? '&#9888;' : '&#9989;';
+        var isBenign = verdict === 'benign';
+        var isUnknown = verdict === 'unknown';
+        var verdictText = isMalicious ? 'Dangerous' : (isBenign ? 'Safe' : 'Unknown');
+        var verdictEmoji = isMalicious ? '&#9888;' : (isBenign ? '&#9989;' : '&#9888;');
+
+        // Set badge colors: malicious=red, benign=green, unknown=orange
+        var badgeStyle;
+        if (isMalicious) {
+            badgeStyle = 'background: linear-gradient(135deg, #eb3349, #f45c43); color: white;';
+        } else if (isBenign) {
+            badgeStyle = 'background: linear-gradient(135deg, #11998e, #38ef7d); color: white;';
+        } else {
+            badgeStyle = 'background: linear-gradient(135deg, #f39c12, #f1c40f); color: #1a1a2e;';
+        }
         
-        var html = 
+        var html =
             '<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.1);">' +
                 '<div style="display: flex; align-items: center; gap: 8px;">' +
                     '<span style="font-size: 18px;">&#128737;</span>' +
                     '<strong style="font-size: 16px;">' + escapeHtml(data.skill_name || skillName) + '</strong>' +
                 '</div>' +
-                '<span style="background: ' + (isMalicious ? 'linear-gradient(135deg, #eb3349, #f45c43)' : 'linear-gradient(135deg, #11998e, #38ef7d)') + '; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; color: white;">' +
+                '<span style="' + badgeStyle + ' padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;">' +
                     verdictEmoji + ' ' + verdictText +
                 '</span>' +
             '</div>';
