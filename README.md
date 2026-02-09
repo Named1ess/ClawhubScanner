@@ -93,4 +93,4 @@ MIT License
 
 ## Author
 
-ClawhubScanner Team
+Named1ess
